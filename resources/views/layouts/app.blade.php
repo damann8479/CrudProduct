@@ -24,16 +24,14 @@
             @livewire('navigation-menu')
 
             <!-- Page Heading -->
-            @if (isset($header))
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endif
-
+            
             <!-- Page Content -->
-            <main>
+            <main class="container mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+                @if (session('msg'))
+                    <div class="p-4 mb-4 text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400">
+                        {{ session('msg') }}
+                    </div>
+                @endif
                 {{ $slot }}
             </main>
         </div>
