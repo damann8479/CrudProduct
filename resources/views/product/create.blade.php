@@ -22,6 +22,18 @@
         <textarea  id="" name="description" cols="90" rows="5" >{{old('description') }}</textarea>
         @error('description') <small class="text-red-600">{{ $message }}</small> @enderror
       </div>
+      <div >
+        <label class="block" for="">Kategorien:</label>
+       <select name="categories[]" id="category" multiple>
+        <option value="">Kategorie hinzufügen</option>
+        @forelse($categories as $category)
+            <option value="{{ $category->id }}" >
+                {{ $category->name }}
+        </option>
+          @empty
+          @endforelse
+        </select>
+      </div>
       <x-button>Anlegen</x-button>
     </form>
   </div>

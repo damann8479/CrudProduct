@@ -180,6 +180,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+
+        'name' => 'Name',
+        'price' => 'Preis',
+        'weight' => 'Gewicht',
+        'description' => 'Beschreibung'
+    ],
 
 ];

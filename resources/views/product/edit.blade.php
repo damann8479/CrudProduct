@@ -1,6 +1,6 @@
 <x-app-layout>
   <div class="bg-white rounded-xl p-2">
-    <form action="/products/{{ $product->id }}" method="POST">
+    <form action="/products/{{ $product->id }}" method="POST" multiple="multiple">
       @csrf
       @method('PUT')
       <div >
@@ -22,6 +22,18 @@
         <label class="block" for="">Beschreibung:</label>
         <textarea  id="" name="description" cols="90" rows="5" >{{old('description') ?? $product->description }}</textarea>
         @error('description') <small class="text-red-600">{{ $message }}</small> @enderror
+      </div>
+      <div >
+        <label class="block" for="">Kategorien:</label>
+       <select name="categories[]" id="category" multiple>
+        <option value="">Kategorie hinzufügen</option>
+        @forelse($categories as $category)
+            <option value="{{ $category->id }}" {{ in_array($category->id, $product->categories->pluck('id')->toArray()) ? 'selected' : '' }}>
+                {{ $category->name }}
+        </option>
+          @empty
+          @endforelse
+        </select>
       </div>
       <x-button>Ändern</x-button>
     </form>

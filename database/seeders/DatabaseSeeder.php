@@ -19,5 +19,9 @@ class DatabaseSeeder extends Seeder
              'email' => 'peter@mpknails.de',
              'password' => bcrypt('Melanie37!')
          ]);
+
+         \App\Models\Category::factory()->create([
+            'name' => 'Test1'
+        ]);
     }
 }

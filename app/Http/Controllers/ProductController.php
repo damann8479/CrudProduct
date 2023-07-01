@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
@@ -24,7 +25,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('product.create');
+        $categories = Category::all();
+        return view('product.create', compact('categories'));
     }
 
     /**
@@ -32,12 +34,13 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request, Product $product)
     {
-        $product->create([
+        $product = Product::create([
             'name' => $request->name,
             'price' => $request->price,
             'weight' => $request->weight,
             'description' => $request->description
         ]);
+        $product->categories()->sync($request->categories);
         return redirect('products')->with('msg', 'Product '.$request->name.' wurde angelegt!');
     }
 
@@ -54,7 +57,8 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('product.edit', compact('product'));
+        $categories = Category::all();
+        return view('product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -68,6 +72,8 @@ class ProductController extends Controller
             'weight' => $request->weight,
             'description' => $request->description
         ]);
+        $product->categories()->sync($request->categories);
+
         return redirect('products')->with('msg', 'Product '.$request->name.' wurde geändert!');
 
     }

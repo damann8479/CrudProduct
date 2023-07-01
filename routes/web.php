@@ -27,6 +27,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
-    Route::resource('categories', CategoryController::class);
-    Route::resource('products', ProductController::class);
+    Route::resources([
+        'categories'=> CategoryController::class,
+        'products'=> ProductController::class
+    ]);
+    
 });
