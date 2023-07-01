@@ -5,46 +5,40 @@
         class="inline-block min-w-full shadow-md rounded-lg overflow-hidden"
       >
       <div class="flex justify-between p-2">
-      <p>Produkte: {{ $products->count() }}</p>
+      <p>User: {{ $users->count() }}</p>
       @role('admin')
-        <a href="products/create" class="bg-gray-800 p-2 text-white rounded-lg">Produkt anlegen</a>
+        <a href="products/create" class="bg-gray-800 p-2 text-white rounded-lg">User anlegen</a>
         @endrole
       </div>
         <table class="min-w-full leading-normal">
           <thead>
             <tr>
               <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                ProduktName
+                Name
               </th>
               <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Preis
-              </th>
-              <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider" >
-                Gewicht
+                Rolle
               </th>
               <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">
-                Aktion
+              Aktion
               </th>
             </tr>
           </thead>
           <tbody>
-          @forelse($products as $product)
+          @forelse($users as $user)
             <tr>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                {{ $product->name }}
+                {{ $user->name }}
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-               {{ $product->price }} €
-              </td>
-              <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-               {{ $product->weight }} g.
+               {{ $user->roles->pluck('name')->implode(',') }}
               </td>
               <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                 <div class="flex">
-                  <a href="products/{{ $product->id }}"><i class="fa-solid fa-eye"></i></a>
+                  <a href="users/{{ $user->id }}"><i class="fa-solid fa-eye"></i></a>
                 @role('admin')
-                  <a href="products/{{ $product->id }}/edit"><i class="fa-solid fa-pen"></i></a>
-                  <form action="products/{{ $product->id }}" method="POST">
+                  <a href="users/{{ $user->id }}/edit"><i class="fa-solid fa-pen"></i></a>
+                  <form action="users/{{ $user->id }}" method="POST">
                   @csrf
                   @method('DELETE')
                   <button type="submit" ><i class="fa-solid fa-trash text-red-600"></i></button>
@@ -54,7 +48,7 @@
               </td>
             </tr>
           @empty
-            <p>Keine Produkte gefunden</p>
+            <p>Keine User gefunden</p>
           @endforelse
             
           </tbody>

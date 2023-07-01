@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 
@@ -13,11 +14,21 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public $products;
+    public $categories;
+
+    public function __construct() 
+    {
+        $this->products = Product::all();
+        $this->categories = Category::all();
+    }
     public function index()
     {
-        $products = Product::all();
+        //$products = Product::all();
         
-        return view('product.index', compact('products'));
+        return view('product.index', [
+            'products' => $this->products
+        ]);
     }
 
     /**
@@ -25,8 +36,10 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        return view('product.create', compact('categories'));
+        $this->authorize('create');
+        return view('product.create', [
+            'categories' => $this->categories
+        ]);
     }
 
     /**
@@ -57,8 +70,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        $categories = Category::all();
-        return view('product.edit', compact('product', 'categories'));
+        $this->authorize('update', $product);
+        return view('product.edit', [
+            'product' => $product,
+            'categories' => $this->categories
+        ]);
     }
 
     /**
@@ -66,6 +82,7 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
+        
         $product->update([
             'name' => $request->name,
             'price' => $request->price,

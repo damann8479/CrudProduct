@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 
@@ -29,7 +30,8 @@ Route::middleware([
     })->name('dashboard');
     Route::resources([
         'categories'=> CategoryController::class,
-        'products'=> ProductController::class
+        'products'=> ProductController::class,
+        'users' => UserController::class
     ]);
     
 });

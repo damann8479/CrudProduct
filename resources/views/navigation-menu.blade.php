@@ -21,6 +21,11 @@
                     <x-nav-link href="{{ route('products.index') }}" :active="request()->routeIs('product.index')">
                         {{ __('Produkte') }}
                     </x-nav-link>
+                    @role('admin')
+                    <x-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('user.index')">
+                        {{ __('User') }}
+                    </x-nav-link>
+                    @endrole
                 </div>
             </div>
 
@@ -154,6 +159,11 @@
             <x-responsive-nav-link href="{{ route('categories.index') }}" :active="request()->routeIs('categories.index')">
                 {{ __('Produkte') }}
             </x-responsive-nav-link>
+            @role('admin')
+            <x-responsive-nav-link href="{{ route('users.index') }}" :active="request()->routeIs('user.index')">
+                {{ __('User') }}
+            </x-responsive-nav-link>
+            @endrole
         </div>
 
         <!-- Responsive Settings Options -->
